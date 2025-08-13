@@ -1,6 +1,12 @@
 [package]
-name = "Lox"
+name = "lox-rs"
 version = "0.1.0"
 edition = "2024"
 
-[dependencies]
+[lib]
+name = "lox_rs"
+path = "src/lib.rs"
+
+[[bin]]
+name = "lox"
+path = "src/bin.rs"
