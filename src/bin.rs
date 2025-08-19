@@ -1,5 +1,3 @@
-#![feature(duration_millis_float)]
-
 use lox_rs::tokenize;
 
 fn main() {
@@ -25,5 +23,5 @@ fn main() {
 			panic!();
 		}
 	};
-	println!("Tokens: {}\nTime taken: {}ms", tokens.len(), std::time::SystemTime::now().duration_since(start).unwrap().as_millis_f64());
+	println!("Tokens: {}\nTime taken: {}µs", tokens.len(), std::time::SystemTime::now().duration_since(start).unwrap().as_micros());
 }
