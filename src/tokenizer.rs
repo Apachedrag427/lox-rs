@@ -61,6 +61,11 @@ impl Tokenizer {
 	}
 
 	pub fn tokenize(&mut self) -> Result<Vec<Token>, String> {
+		
+		// Ensure the final token is properly processed
+		// (Otherwise, if an identifier or number is the final token, it'll never be pushed to the result)
+		self.source.push(' ');
+
 		let bytes = self.source.as_bytes();
 
 		let mut errors = vec![];
@@ -225,6 +230,19 @@ impl Tokenizer {
 					errors.push(self.generate_report(format!("Invalid token '{}'", c), current_offset))
 				}
 			}
+		}
+
+		if reading_string {
+			errors.push(
+				self.generate_report(
+					format!("Unterminated string {}",
+						std::mem::take(&mut string_buf)
+						.into_iter()
+						.collect::<String>()
+					),
+					read_start_offset
+				)
+			)
 		}
 
 		self.tokens.push(Token::Eof);
